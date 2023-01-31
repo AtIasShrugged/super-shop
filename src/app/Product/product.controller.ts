@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common'
+import { Body, Controller, Get, Param, ParseIntPipe, Post } from '@nestjs/common'
 import { ProductService } from './product.service'
 import * as ProductTypes from './types/product.types'
 
@@ -13,7 +13,7 @@ export class ProductController {
 	}
 
 	@Get(':id')
-	findOne(@Param('id') id: number) {
+	findOne(@Param('id', ParseIntPipe) id: number) {
 		const product = this.productService.findProductById(id)
 		return product
 	}
