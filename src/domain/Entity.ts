@@ -1,7 +1,3 @@
-export abstract class Entity<T> {
-	protected props: T
-
-	constructor(props: T) {
-		this.props = props
-	}
+export abstract class Entity<DTO> {
+	public abstract toDto(): DTO
 }

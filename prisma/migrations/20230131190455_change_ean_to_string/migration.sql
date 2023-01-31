@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE "Product" ALTER COLUMN "ean" SET DATA TYPE TEXT;
