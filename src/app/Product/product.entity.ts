@@ -1,37 +1,37 @@
 import { Entity } from 'src/domain/Entity'
-import * as ProductTypes from './types/product.types'
+import { ProductDto, CreateProductDto, UpdateProductDto } from './dto'
 
-export class Product extends Entity<ProductTypes.DTO> {
+export class Product extends Entity<ProductDto> {
 	private readonly id?: number
 	public ean: string
 	public name: string
 	public description: string
 	public cost: number
 
-	private constructor(dto: ProductTypes.CreateDTO) {
+	private constructor(dto: CreateProductDto) {
 		super()
-		const { id, ean, name, description, cost } = dto
-		this.id = id
+		const { ean, name, description, cost } = dto
 		this.ean = ean
 		this.name = name
 		this.description = description
 		this.cost = cost
 	}
 
-	static create(product: ProductTypes.CreateDTO) {
+	static create(product: CreateProductDto) {
 		const instance = new Product(product)
 		return instance
 	}
 
-	update(product: ProductTypes.UpdateDTO) {
-		const { name, description, cost } = product
+	update(product: UpdateProductDto) {
+		const { name, description, cost, ean } = product
 
 		this.name = name
 		this.description = description
 		this.cost = cost
+		this.ean = ean
 	}
 
-	public toDto(): ProductTypes.DTO {
+	public toDto(): ProductDto {
 		const { id, ean, name, description, cost } = this
 		return { id, ean, name, description, cost }
 	}
