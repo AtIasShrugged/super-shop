@@ -4,10 +4,11 @@ import { PrismaModule } from 'src/infrastructure/prisma/prisma.module'
 import { ProductController } from './product.controller'
 import { ProductRepository } from './repository/product.repository'
 import { ProductService } from './product.service'
+import { ProductGQLResolver } from './gql/product-gql-resolver'
 
 @Module({
 	imports: [PrismaModule],
-	controllers: [ProductController],
-	providers: [ProductService, PrismaService, ProductRepository],
+	controllers: [],
+	providers: [ProductGQLResolver, ProductService, PrismaService, ProductRepository],
 })
 export class ProductModule {}

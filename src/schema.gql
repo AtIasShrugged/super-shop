@@ -1,0 +1,16 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type Product {
+  id: ID!
+  ean: String!
+  name: String!
+  description: String
+  cost: Int!
+}
+
+type Query {
+  productsList: [Product!]!
+  product(id: Int!): Product!
+}
