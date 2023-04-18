@@ -17,13 +17,18 @@ export class Product extends Entity<ProductDto> {
 		this.cost = cost
 	}
 
-	static create(product: CreateProductDto) {
-		const instance = new Product(product)
-		return instance
+	static create(dto: CreateProductDto) {
+		const product = new Product(dto)
+		return product
 	}
 
-	update(product: UpdateProductDto) {
-		const { name, description, cost, ean } = product
+	update(dto: UpdateProductDto) {
+		const {
+			name = this.name,
+			description = this.description,
+			cost = this.cost,
+			ean = this.ean,
+		} = dto
 
 		this.name = name
 		this.description = description

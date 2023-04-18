@@ -18,8 +18,8 @@ export class ProductService {
 	}
 
 	public async createProduct(dto: CreateProductDto) {
-		const product = Product.create(dto)
-		await this.repository.create(product)
+		const productEntity = Product.create(dto)
+		const product = await this.repository.create(productEntity)
 		return product
 	}
 }
