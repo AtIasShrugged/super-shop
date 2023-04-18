@@ -14,3 +14,14 @@ type Query {
   productsList: [Product!]!
   product(id: Int!): Product!
 }
+
+type Mutation {
+  createProduct(productInput: CreateProductInput!): Product!
+}
+
+input CreateProductInput {
+  ean: String!
+  name: String!
+  description: String
+  cost: Int!
+}
