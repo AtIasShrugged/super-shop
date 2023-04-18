@@ -2,7 +2,6 @@ import { Entity } from 'src/domain/Entity'
 import { ProductDto, CreateProductDto, UpdateProductDto } from './dto'
 
 export class Product extends Entity<ProductDto> {
-	private readonly id?: number
 	public ean: string
 	public name: string
 	public description: string
@@ -37,7 +36,7 @@ export class Product extends Entity<ProductDto> {
 	}
 
 	public toDto(): ProductDto {
-		const { id, ean, name, description, cost } = this
-		return { id, ean, name, description, cost }
+		const { ean, name, description, cost } = this
+		return { ean, name, description, cost }
 	}
 }
