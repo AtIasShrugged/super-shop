@@ -1,8 +1,14 @@
 import { Product as ProductModel } from '@prisma/client'
 import { Product } from '../product.entity'
 
+export type searchOptions = {
+	limit?: number
+	offset?: number
+	order?: 'asc' | 'desc'
+}
+
 export abstract class AbstractProductRepository {
 	create: (product: Product) => Promise<ProductModel>
-	getAll: () => Promise<ProductModel[]>
+	find: (options: searchOptions) => Promise<ProductModel[]>
 	findById: (id: number) => Promise<ProductModel>
 }

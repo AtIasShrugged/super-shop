@@ -7,8 +7,8 @@ import { AbstractProductRepository } from './repository/abstract.product.reposit
 export class ProductService {
 	constructor(private repository: AbstractProductRepository) {}
 
-	public async getProducts() {
-		const products = await this.repository.getAll()
+	public async findProducts() {
+		const products = await this.repository.find({})
 		return products
 	}
 

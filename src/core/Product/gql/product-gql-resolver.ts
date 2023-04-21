@@ -9,7 +9,7 @@ export class ProductGQLResolver {
 
 	@Query(() => [ProductGQLType])
 	productsList() {
-		return this.productService.getProducts()
+		return this.productService.findProducts()
 	}
 
 	@Query(() => ProductGQLType)

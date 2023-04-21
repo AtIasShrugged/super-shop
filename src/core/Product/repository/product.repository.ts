@@ -1,5 +1,5 @@
 import { Prisma } from '@prisma/client'
-import { AbstractProductRepository } from './abstract.product.repository'
+import { AbstractProductRepository, searchOptions } from './abstract.product.repository'
 import { PrismaService } from '../../../infrastructure/prisma.service'
 import { Injectable } from '@nestjs/common'
 
@@ -12,8 +12,13 @@ export class ProductRepository implements AbstractProductRepository {
 		return product
 	}
 
-	async getAll() {
-		const products = await this.prisma.product.findMany({ orderBy: { id: 'asc' } })
+	async find(options: searchOptions) {
+		const { limit = 10, offset = 0, order = 'asc' } = options
+		const products = await this.prisma.product.findMany({
+			take: limit,
+			skip: offset,
+			orderBy: { name: order },
+		})
 		return products
 	}
 

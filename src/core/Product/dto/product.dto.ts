@@ -10,7 +10,7 @@ export class ProductDto {
 	public name: string
 
 	@IsString()
-	public description: string
+	public description?: string
 
 	@IsNumber()
 	@IsNotEmpty()
