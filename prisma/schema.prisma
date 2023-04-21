@@ -14,3 +14,13 @@ model Product {
   description String?
   cost        Int
 }
+
+model User {
+  id          Int     @id @default(autoincrement())
+  email       String  @unique
+  phoneNumber String  @unique
+  firstName   String
+  lastName    String
+  password    String
+  isConfirmed Boolean
+}

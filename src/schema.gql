@@ -10,13 +10,24 @@ type Product {
   cost: Int!
 }
 
+type User {
+  id: ID!
+  email: String!
+  phoneNumber: String!
+  firstName: String!
+  lastName: String!
+}
+
 type Query {
   productsList: [Product!]!
   product(id: Int!): Product!
+  usersList: [User!]!
+  user(id: Int!): User!
 }
 
 type Mutation {
   createProduct(productInput: CreateProductInput!): Product!
+  signUp(signUpInput: SignUpInput!): User!
 }
 
 input CreateProductInput {
@@ -24,4 +35,12 @@ input CreateProductInput {
   name: String!
   description: String
   cost: Int!
+}
+
+input SignUpInput {
+  email: String!
+  phoneNumber: String!
+  firstName: String!
+  lastName: String!
+  password: String!
 }
