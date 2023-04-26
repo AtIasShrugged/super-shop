@@ -1,4 +1,4 @@
-import { Entity } from 'src/domain/Entity'
+import { Entity } from '../../domain/Entity'
 import { ProductDto, CreateProductDto, UpdateProductDto } from './dto'
 
 export class Product extends Entity<ProductDto> {
