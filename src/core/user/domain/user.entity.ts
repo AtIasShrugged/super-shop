@@ -1,6 +1,5 @@
-import { Entity } from '../../domain/Entity'
-import { SignUpDto } from './dto/sign-up.dto'
-import { UserDto } from './dto/user.dto'
+import { Entity } from '../../../domain/Entity'
+import { UserDto, SignUpDto } from './user-types'
 import * as bcrypt from 'bcrypt'
 
 const PASSWORD_HASH_ROUNDS = Math.max(parseInt(process.env.PASSWORD_HASH_ROUNDS ?? ''), 0) || 10

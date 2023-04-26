@@ -1,5 +1,5 @@
-import { Entity } from '../../domain/Entity'
-import { ProductDto, CreateProductDto, UpdateProductDto } from './dto'
+import { Entity } from '../../../domain/Entity'
+import { ProductDto, CreateProductDto, UpdateProductDto } from './product-types'
 
 export class Product extends Entity<ProductDto> {
 	public ean: string

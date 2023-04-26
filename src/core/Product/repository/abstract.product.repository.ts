@@ -1,5 +1,5 @@
 import { Product as ProductModel } from '@prisma/client'
-import { Product } from '../product.entity'
+import { Product } from '../domain/product.entity'
 
 export type searchOptions = {
 	limit?: number

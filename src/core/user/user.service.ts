@@ -1,7 +1,7 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common'
 import { AbstractUserRepository } from './repository/abstract.user.repository'
-import { SignUpDto } from './dto/sign-up.dto'
-import { User } from './user.entity'
+import { SignUpDto } from './domain/user-types'
+import { User } from './domain/user.entity'
 
 @Injectable()
 export class UserService {
