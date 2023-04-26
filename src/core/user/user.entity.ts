@@ -37,10 +37,7 @@ export class User extends Entity<UserDto> {
 	}
 
 	public async setPassword(password: string) {
-		console.log(PASSWORD_HASH_ROUNDS)
-		console.log(password)
 		const hash = await bcrypt.hash(password, PASSWORD_HASH_ROUNDS)
-		console.log(hash)
 		this.password = hash
 	}
 

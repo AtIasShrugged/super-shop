@@ -1,6 +1,6 @@
 import { Prisma } from '@prisma/client'
 import { AbstractUserRepository, searchOptions } from './abstract.user.repository'
-import { PrismaService } from 'src/infrastructure/prisma.service'
+import { PrismaService } from 'src/infrastructure/prisma/prisma.service'
 import { Injectable } from '@nestjs/common'
 
 @Injectable()
