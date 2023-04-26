@@ -24,12 +24,6 @@ export class User extends Entity<UserDto> {
 		this.isConfirmed = isConfirmed
 	}
 
-	// TODO: create dto and method for future admin page
-	// public static create(dto: CreateUserDto) {
-	// 	const user = new User(dto)
-	// 	return user
-	// }
-
 	public static async signUp(dto: SignUpDto) {
 		const user = new User(dto)
 		await user.setPassword(dto.password)
