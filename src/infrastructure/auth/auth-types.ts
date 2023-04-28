@@ -1,8 +1,8 @@
-import { UserRole } from '../../core/user/domain/user-types'
+import { Role } from '../../core/user/domain/user-types'
 
 export type AuthTokenDto = {
 	id: number
-	role?: UserRole
+	role?: Role
 }
 
 export type AuthPayload = {
