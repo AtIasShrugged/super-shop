@@ -1,6 +1,6 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common'
 import { AbstractUserRepository } from './repository/abstract.user.repository'
-import { SignUpDto, Role } from './domain/user-types'
+import { SignUpDto } from './domain/user-types'
 import { User } from './domain/user.entity'
 import { AuthService } from '../../infrastructure/auth/auth.service'
 

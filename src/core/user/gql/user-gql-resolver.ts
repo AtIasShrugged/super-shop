@@ -1,16 +1,19 @@
 import { Args, Int, Mutation, Query, Resolver } from '@nestjs/graphql'
+import { UseGuards } from '@nestjs/common'
+import { JwtAuthGuard, RolesGuard } from '../../../infrastructure/guards'
+import { Roles } from '../../../infrastructure/decorators/roles.decorator'
 import { UserGQLType } from './types/user-gql-type'
 import { UserService } from '../user.service'
 import { SignUpGQLInput } from './inputs/sign-up-gql-input'
-import { UseGuards } from '@nestjs/common'
-import { JwtAuthGuard } from '../../../infrastructure/guards/jwt-auth.guard'
 import { SignInGQLInput } from './inputs/sign-in-gql-input'
+import { Role } from '../domain/user-types'
 
 @Resolver(() => UserGQLType)
 export class UserGQLResolver {
 	constructor(private userService: UserService) {}
 
-	@UseGuards(JwtAuthGuard)
+	@UseGuards(JwtAuthGuard, RolesGuard)
+	@Roles(Role.ADMIN)
 	@Query(() => [UserGQLType])
 	usersList() {
 		return this.userService.findUsers()

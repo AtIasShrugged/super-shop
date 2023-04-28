@@ -3,56 +3,56 @@
 # ------------------------------------------------------
 
 type Product {
-	id: ID!
-	ean: String!
-	name: String!
-	description: String
-	cost: Int!
+  id: ID!
+  ean: String!
+  name: String!
+  description: String
+  cost: Int!
 }
 
 type User {
-	id: ID!
-	email: String!
-	phoneNumber: String!
-	firstName: String!
-	lastName: String!
-	role: UserRole!
+  id: ID!
+  email: String!
+  phoneNumber: String!
+  firstName: String!
+  lastName: String!
+  role: Role!
 }
 
 enum Role {
-	USER
-	ADMIN
+  USER
+  ADMIN
 }
 
 type Query {
-	productsList: [Product!]!
-	product(id: Int!): Product!
-	usersList: [User!]!
-	user(id: Int!): User!
+  productsList: [Product!]!
+  product(id: Int!): Product!
+  usersList: [User!]!
+  user(id: Int!): User!
 }
 
 type Mutation {
-	createProduct(productInput: CreateProductInput!): Product!
-	signUp(signUpInput: SignUpInput!): User!
-	signIn(signInInput: SignInInput!): String!
+  createProduct(productInput: CreateProductInput!): Product!
+  signUp(signUpInput: SignUpInput!): User!
+  signIn(signInInput: SignInInput!): String!
 }
 
 input CreateProductInput {
-	ean: String!
-	name: String!
-	description: String
-	cost: Int!
+  ean: String!
+  name: String!
+  description: String
+  cost: Int!
 }
 
 input SignUpInput {
-	email: String!
-	phoneNumber: String!
-	firstName: String!
-	lastName: String!
-	password: String!
+  email: String!
+  phoneNumber: String!
+  firstName: String!
+  lastName: String!
+  password: String!
 }
 
 input SignInInput {
-	email: String!
-	password: String!
+  email: String!
+  password: String!
 }

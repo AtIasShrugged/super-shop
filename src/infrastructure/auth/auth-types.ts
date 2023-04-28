@@ -2,10 +2,11 @@ import { Role } from '../../core/user/domain/user-types'
 
 export type AuthTokenDto = {
 	id: number
-	role?: Role
+	role: Role
 }
 
 export type AuthPayload = {
 	id: number
+	role: Role
 	exp: number
 }
