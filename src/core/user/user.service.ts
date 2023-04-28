@@ -1,11 +1,12 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common'
 import { AbstractUserRepository } from './repository/abstract.user.repository'
-import { SignUpDto } from './domain/user-types'
+import { SignUpDto, Role } from './domain/user-types'
 import { User } from './domain/user.entity'
+import { AuthService } from '../../infrastructure/auth/auth.service'
 
 @Injectable()
 export class UserService {
-	constructor(private repository: AbstractUserRepository) {}
+	constructor(private repository: AbstractUserRepository, private authService: AuthService) {}
 
 	public async findUsers() {
 		const users = await this.repository.find({})
@@ -29,5 +30,20 @@ export class UserService {
 		const newUser = await this.repository.create(newUserEntity)
 
 		return newUser
+	}
+
+	public async signIn(email: string, password: string) {
+		const [user] = await this.repository.find({ email })
+		if (!user) {
+			throw new HttpException('Wrong email or password', HttpStatus.BAD_REQUEST)
+		}
+
+		const userEntity = User.create(user)
+
+		if (!userEntity.checkPassword(password)) {
+			throw new HttpException('Wrong email or password', HttpStatus.BAD_REQUEST)
+		}
+
+		return this.authService.createAuthToken({ id: user.id, role: user.role })
 	}
 }
