@@ -1,5 +1,5 @@
 import { User as UserModel } from '@prisma/client'
-import { User } from '../user.entity'
+import { User } from '../domain/user.entity'
 
 export type searchOptions = {
 	limit?: number

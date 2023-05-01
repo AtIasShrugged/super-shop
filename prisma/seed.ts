@@ -3,6 +3,23 @@ import { PrismaClient } from '@prisma/client'
 const prisma = new PrismaClient()
 
 async function main() {
+	const admin = await prisma.user.upsert({
+		where: { id: 1 },
+		update: {},
+		create: {
+			id: 1,
+			email: process.env.adminEmail || '',
+			firstName: 'admin',
+			lastName: 'super-shop',
+			phoneNumber: process.env.adminPhoneNumber || '',
+			password: process.env.adminPassword || '',
+			role: 'ADMIN',
+			isConfirmed: true,
+		},
+	})
+
+	console.log('Created admin user: ', admin)
+
 	const iphone = await prisma.product.upsert({
 		where: { ean: '194252708385' },
 		update: {},

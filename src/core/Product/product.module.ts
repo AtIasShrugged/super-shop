@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common'
-import { PrismaService } from 'src/infrastructure/prisma/prisma.service'
-import { PrismaModule } from 'src/infrastructure/prisma/prisma.module'
+import { PrismaService } from '../../infrastructure/prisma/prisma.service'
+import { PrismaModule } from '../../infrastructure/prisma/prisma.module'
 import { ProductRepository } from './repository/product.repository'
 import { AbstractProductRepository } from './repository/abstract.product.repository'
 import { ProductService } from './product.service'

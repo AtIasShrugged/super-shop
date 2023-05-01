@@ -16,6 +16,12 @@ type User {
   phoneNumber: String!
   firstName: String!
   lastName: String!
+  role: Role!
+}
+
+enum Role {
+  USER
+  ADMIN
 }
 
 type Query {
@@ -28,6 +34,7 @@ type Query {
 type Mutation {
   createProduct(productInput: CreateProductInput!): Product!
   signUp(signUpInput: SignUpInput!): User!
+  signIn(signInInput: SignInInput!): String!
 }
 
 input CreateProductInput {
@@ -42,5 +49,10 @@ input SignUpInput {
   phoneNumber: String!
   firstName: String!
   lastName: String!
+  password: String!
+}
+
+input SignInInput {
+  email: String!
   password: String!
 }
