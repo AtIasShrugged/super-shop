@@ -1,14 +1,10 @@
-import { Product as ProductModel } from '@prisma/client'
+import { Product as ProductModel, ProductField } from '@prisma/client'
 import { Product } from '../domain/product.entity'
-
-export type searchOptions = {
-	limit?: number
-	offset?: number
-	order?: 'asc' | 'desc'
-}
+import { SearchOptions } from '../gql/inputs'
 
 export abstract class AbstractProductRepository {
 	create: (product: Product) => Promise<ProductModel>
-	find: (options: searchOptions) => Promise<ProductModel[]>
+	find: (options: SearchOptions) => Promise<ProductModel[]>
+	getProductFields: (productId: number) => Promise<ProductField[]>
 	findById: (id: number) => Promise<ProductModel>
 }
