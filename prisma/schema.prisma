@@ -7,12 +7,33 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model Category {
+  id      Int       @id @default(autoincrement())
+  name    String    @unique
+  Product Product[]
+}
+
+model ProductField {
+  id          Int       @id @default(autoincrement())
+  name        String
+  value       String
+  description String?
+  products    Product[]
+
+  @@unique([name, value])
+}
+
 model Product {
-  id          Int     @id @default(autoincrement())
-  ean         String  @unique
+  id          Int            @id @default(autoincrement())
+  ean         String         @unique
+  brand       String
   name        String
   description String?
   cost        Int
+  discount    Int            @default(0)
+  category    Category       @relation(fields: [categoryId], references: [id])
+  categoryId  Int
+  fields      ProductField[]
 }
 
 enum Role {
