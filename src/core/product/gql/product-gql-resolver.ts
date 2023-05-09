@@ -1,15 +1,20 @@
-import { Args, Int, Mutation, Query, Resolver } from '@nestjs/graphql'
-import { ProductGQLType } from './types/product-gql-type'
+import { Args, Int, Mutation, Parent, Query, ResolveField, Resolver } from '@nestjs/graphql'
 import { ProductService } from '../product.service'
-import { CreateProductGQLInput } from './inputs/create-product-gql-input'
+import { CreateProductGQLInput, SearchOptions } from './inputs'
+import { ProductFieldGQLType, ProductGQLType } from './types'
 
 @Resolver(() => ProductGQLType)
 export class ProductGQLResolver {
 	constructor(private productService: ProductService) {}
 
+	@ResolveField(() => [ProductFieldGQLType])
+	productFields(@Parent() { id }: ProductGQLType) {
+		return this.productService.getProductFields(id)
+	}
+
 	@Query(() => [ProductGQLType])
-	productsList() {
-		return this.productService.findProducts()
+	productsList(@Args('searchOptions') options: SearchOptions) {
+		return this.productService.findProducts(options)
 	}
 
 	@Query(() => ProductGQLType)
