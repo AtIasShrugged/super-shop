@@ -23,6 +23,13 @@ model ProductField {
   @@unique([name, value])
 }
 
+enum StockStatus {
+  IN_STOCK
+  OUT_OF_STOCK
+  PENDING_SHIPMENT
+  ENDS
+}
+
 model Product {
   id          Int             @id @default(autoincrement())
   ean         String          @unique
@@ -31,6 +38,7 @@ model Product {
   description String?
   cost        Int
   discount    Int             @default(0)
+  stockStatus StockStatus     @default(IN_STOCK)
   category    ProductCategory @relation(fields: [categoryId], references: [id])
   categoryId  Int
   fields      ProductField[]

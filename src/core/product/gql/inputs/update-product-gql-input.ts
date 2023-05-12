@@ -1,7 +1,8 @@
 import { Field, ID, InputType, Int } from '@nestjs/graphql'
-import { IsNotEmpty, IsOptional, IsPositive, IsString } from 'class-validator'
+import { IsEnum, IsNotEmpty, IsOptional, IsPositive, IsString } from 'class-validator'
 import { ProductFieldGQLType } from '../types'
 import { UpdateProductFieldInput } from './'
+import { StockStatus } from '../../domain/product-types'
 
 @InputType('UpdateProductInput')
 export class UpdateProductGQLInput {
@@ -38,6 +39,11 @@ export class UpdateProductGQLInput {
 	@IsOptional()
 	@Field(() => Int, { nullable: true })
 	discount!: number
+
+	@IsEnum(StockStatus)
+	@IsOptional()
+	@Field(() => StockStatus, { nullable: true })
+	stockStatus!: StockStatus | null
 
 	@IsString()
 	@IsOptional()

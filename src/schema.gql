@@ -10,9 +10,17 @@ type Product {
   description: String
   cost: Int!
   discount: Int!
+  stockStatus: StockStatus!
   category: ProductCategory!
   fields: [ProductField!]
   productFields: [ProductField!]!
+}
+
+enum StockStatus {
+  IN_STOCK
+  OUT_OF_STOCK
+  ENDS
+  PENDING_SHIPMENT
 }
 
 type ProductField {
@@ -83,6 +91,7 @@ input CreateProductInput {
   description: String
   cost: Int!
   discount: Int!
+  stockStatus: StockStatus! = IN_STOCK
   category: String!
   fields: [CreateProductFieldInput!]
 }
@@ -101,6 +110,7 @@ input UpdateProductInput {
   description: String
   cost: Int
   discount: Int
+  stockStatus: StockStatus
   category: String
   fields: [UpdateProductFieldInput!]
 }

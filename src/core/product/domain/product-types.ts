@@ -1,3 +1,13 @@
+export const StockStatus: {
+	[x: string]: 'IN_STOCK' | 'OUT_OF_STOCK' | 'ENDS' | 'PENDING_SHIPMENT'
+} = {
+	IN_STOCK: 'IN_STOCK',
+	OUT_OF_STOCK: 'OUT_OF_STOCK',
+	ENDS: 'ENDS',
+	PENDING_SHIPMENT: 'PENDING_SHIPMENT',
+}
+export type StockStatus = (typeof StockStatus)[keyof typeof StockStatus]
+
 export type ProductDto = {
 	id?: number
 	ean: string
@@ -6,6 +16,7 @@ export type ProductDto = {
 	description?: string
 	cost: number
 	discount?: number
+	stockStatus: StockStatus
 	category: string
 	fields?: ProductFieldDto[]
 }

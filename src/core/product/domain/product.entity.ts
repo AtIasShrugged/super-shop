@@ -5,6 +5,7 @@ import {
 	UpdateProductDto,
 	ProductFieldDto,
 	UpdateProductFieldDto,
+	StockStatus,
 } from './product-types'
 
 export class Product extends Entity<ProductDto> {
@@ -15,12 +16,13 @@ export class Product extends Entity<ProductDto> {
 	public description?: string
 	public cost: number
 	public discount: number
+	public stockStatus: StockStatus
 	public category: string
 	public fields: ProductFieldDto[]
 
 	private constructor(dto: CreateProductDto) {
 		super()
-		const { id, ean, brand, name, description, cost, discount, category, fields } = dto
+		const { id, ean, brand, name, description, cost, discount, stockStatus, category, fields } = dto
 		this.id = id
 		this.ean = ean
 		this.brand = brand
@@ -28,6 +30,7 @@ export class Product extends Entity<ProductDto> {
 		this.description = description
 		this.cost = cost
 		this.discount = discount
+		this.stockStatus = stockStatus
 		this.category = category
 		this.fields = fields
 	}
@@ -44,6 +47,7 @@ export class Product extends Entity<ProductDto> {
 			description = this.description,
 			cost = this.cost,
 			discount = this.discount,
+			stockStatus = this.stockStatus,
 			category = this.category,
 			ean = this.ean,
 		} = dto
@@ -53,6 +57,7 @@ export class Product extends Entity<ProductDto> {
 		this.description = description
 		this.cost = cost
 		this.discount = discount
+		this.stockStatus = stockStatus
 		this.category = category
 		this.ean = ean
 	}
@@ -71,7 +76,8 @@ export class Product extends Entity<ProductDto> {
 	}
 
 	public toDto(): ProductDto {
-		const { id, ean, brand, name, description, cost, category, discount, fields } = this
-		return { id, ean, brand, name, description, cost, category, discount, fields }
+		const { id, ean, brand, name, description, cost, discount, stockStatus, category, fields } =
+			this
+		return { id, ean, brand, name, description, cost, discount, stockStatus, category, fields }
 	}
 }
