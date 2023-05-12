@@ -5,9 +5,34 @@
 type Product {
   id: ID!
   ean: String!
+  brand: String!
   name: String!
   description: String
   cost: Int!
+  discount: Int!
+  stockStatus: StockStatus!
+  category: ProductCategory!
+  fields: [ProductField!]
+  productFields: [ProductField!]!
+}
+
+enum StockStatus {
+  IN_STOCK
+  OUT_OF_STOCK
+  ENDS
+  PENDING_SHIPMENT
+}
+
+type ProductField {
+  id: ID!
+  name: String!
+  value: String!
+  description: String
+}
+
+type ProductCategory {
+  id: ID!
+  name: String!
 }
 
 type User {
@@ -25,23 +50,76 @@ enum Role {
 }
 
 type Query {
-  productsList: [Product!]!
+  productsList(searchOptions: SearchOptions!): [Product!]!
   product(id: Int!): Product!
   usersList: [User!]!
   user(id: Int!): User!
 }
 
+input SearchOptions {
+  limit: Int
+  offset: Int
+  orderBy: orderBy
+  order: order
+}
+
+enum orderBy {
+  ID
+  NAME
+  COST
+  DISCOUNT
+}
+
+enum order {
+  ASC
+  DESC
+}
+
 type Mutation {
   createProduct(productInput: CreateProductInput!): Product!
+  updateProduct(updateProductInput: UpdateProductInput!): Product!
+  deleteProduct(id: Int!): Product!
+  addFieldsToProduct(productId: Int!, fieldsInput: [CreateProductFieldInput!]!): [ProductField!]!
   signUp(signUpInput: SignUpInput!): User!
   signIn(signInInput: SignInInput!): String!
 }
 
 input CreateProductInput {
   ean: String!
+  brand: String!
   name: String!
   description: String
   cost: Int!
+  discount: Int!
+  stockStatus: StockStatus! = IN_STOCK
+  category: String!
+  fields: [CreateProductFieldInput!]
+}
+
+input CreateProductFieldInput {
+  name: String!
+  value: String!
+  description: String
+}
+
+input UpdateProductInput {
+  id: ID!
+  ean: String
+  brand: String
+  name: String
+  description: String
+  cost: Int
+  discount: Int
+  stockStatus: StockStatus
+  category: String
+  fields: [UpdateProductFieldInput!]
+}
+
+input UpdateProductFieldInput {
+  id: ID!
+  name: String
+  value: String
+  description: String
 }
 
 input SignUpInput {

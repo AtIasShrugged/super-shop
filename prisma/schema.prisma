@@ -7,12 +7,41 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model ProductCategory {
+  id      Int       @id @default(autoincrement())
+  name    String    @unique
+  Product Product[]
+}
+
+model ProductField {
+  id          Int       @id @default(autoincrement())
+  name        String
+  value       String
+  description String?
+  products    Product[]
+
+  @@unique([name, value])
+}
+
+enum StockStatus {
+  IN_STOCK
+  OUT_OF_STOCK
+  PENDING_SHIPMENT
+  ENDS
+}
+
 model Product {
-  id          Int     @id @default(autoincrement())
-  ean         String  @unique
+  id          Int             @id @default(autoincrement())
+  ean         String          @unique
+  brand       String
   name        String
   description String?
   cost        Int
+  discount    Int             @default(0)
+  stockStatus StockStatus     @default(IN_STOCK)
+  category    ProductCategory @relation(fields: [categoryId], references: [id])
+  categoryId  Int
+  fields      ProductField[]
 }
 
 enum Role {

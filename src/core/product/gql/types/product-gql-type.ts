@@ -1,4 +1,8 @@
-import { Field, ID, Int, ObjectType } from '@nestjs/graphql'
+import { Field, ID, Int, ObjectType, registerEnumType } from '@nestjs/graphql'
+import { ProductFieldGQLType, ProductCategoryGQLType } from './'
+import { StockStatus } from '../../domain/product-types'
+
+registerEnumType(StockStatus, { name: 'StockStatus' })
 
 @ObjectType('Product')
 export class ProductGQLType {
@@ -9,6 +13,9 @@ export class ProductGQLType {
 	ean!: string
 
 	@Field(() => String)
+	brand!: string
+
+	@Field(() => String)
 	name!: string
 
 	@Field(() => String, { nullable: true })
@@ -16,4 +23,16 @@ export class ProductGQLType {
 
 	@Field(() => Int)
 	cost!: number
+
+	@Field(() => Int)
+	discount!: number
+
+	@Field(() => StockStatus)
+	stockStatus!: StockStatus
+
+	@Field(() => ProductCategoryGQLType)
+	category!: string
+
+	@Field(() => [ProductFieldGQLType], { nullable: true })
+	fields: ProductFieldGQLType[] | null
 }
