@@ -1,7 +1,7 @@
 import { AbstractProductRepository } from './abstract.product.repository'
 import { PrismaService } from '../../../infrastructure/prisma/prisma.service'
 import { Injectable } from '@nestjs/common'
-import { CreateProductDto } from '../domain/product-types'
+import { CreateProductDto, ProductFieldDto, UpdateProductDto } from '../domain/product-types'
 import { Order, OrderBy, SearchOptions } from '../gql/inputs'
 
 @Injectable()
@@ -52,6 +52,51 @@ export class ProductRepository implements AbstractProductRepository {
 		return product
 	}
 
+	async update(productInput: UpdateProductDto) {
+		const { id, ean, brand, name, description, cost, discount, fields, category } = productInput
+
+		const product = await this.prisma.product.update({
+			where: {
+				id,
+			},
+			data: {
+				ean,
+				brand,
+				name,
+				cost,
+				discount,
+				description,
+				category: {
+					connectOrCreate: {
+						where: {
+							name: category,
+						},
+						create: {
+							name: category,
+						},
+					},
+				},
+				fields: {
+					updateMany: fields.map((field) => ({
+						where: {
+							id: +field.id,
+						},
+						data: {
+							name: field.name,
+							value: field.value,
+							description: field.description,
+						},
+					})),
+				},
+			},
+			include: {
+				category: true,
+				fields: true,
+			},
+		})
+		return product
+	}
+
 	async find(options: SearchOptions) {
 		const { limit = 10, offset = 0, order = Order.ASC, orderBy = OrderBy.NAME } = options
 		const products = await this.prisma.product.findMany({
@@ -64,6 +109,32 @@ export class ProductRepository implements AbstractProductRepository {
 			orderBy: { [orderBy]: order },
 		})
 		return products
+	}
+
+	async delete(id: number) {
+		const product = await this.prisma.product.delete({
+			where: {
+				id,
+			},
+			include: {
+				fields: true,
+				category: true,
+			},
+		})
+		return product
+	}
+
+	async findById(id: number) {
+		const product = await this.prisma.product.findUniqueOrThrow({
+			where: {
+				id,
+			},
+			include: {
+				category: true,
+				fields: true,
+			},
+		})
+		return product
 	}
 
 	async getProductFields(productId: number) {
@@ -79,12 +150,28 @@ export class ProductRepository implements AbstractProductRepository {
 		return fields
 	}
 
-	async findById(id: number) {
-		const product = await this.prisma.product.findUniqueOrThrow({
+	async addFieldsToProduct(productId: number, fields: ProductFieldDto[]) {
+		const product = await this.prisma.product.update({
 			where: {
-				id,
+				id: productId,
+			},
+			data: {
+				fields: {
+					connectOrCreate: fields.map((field) => ({
+						where: {
+							name_value: {
+								name: field.name,
+								value: field.value,
+							},
+						},
+						create: field,
+					})),
+				},
+			},
+			include: {
+				fields: true,
 			},
 		})
-		return product
+		return product.fields
 	}
 }

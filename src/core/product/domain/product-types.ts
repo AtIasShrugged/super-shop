@@ -1,4 +1,5 @@
 export type ProductDto = {
+	id?: number
 	ean: string
 	brand: string
 	name: string
@@ -11,9 +12,12 @@ export type ProductDto = {
 
 export type CreateProductDto = ProductDto
 
-export type UpdateProductDto = Partial<CreateProductDto>
+export type UpdateProductDto = Partial<Omit<CreateProductDto, 'fields'>> & {
+	fields?: UpdateProductFieldDto[]
+}
 
 export type ProductFieldDto = {
+	id?: number
 	name: string
 	value: string
 	description?: string

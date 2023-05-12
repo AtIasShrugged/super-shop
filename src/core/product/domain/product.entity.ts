@@ -1,7 +1,14 @@
 import { Entity } from '../../../domain/Entity'
-import { ProductDto, CreateProductDto, UpdateProductDto, ProductFieldDto } from './product-types'
+import {
+	ProductDto,
+	CreateProductDto,
+	UpdateProductDto,
+	ProductFieldDto,
+	UpdateProductFieldDto,
+} from './product-types'
 
 export class Product extends Entity<ProductDto> {
+	public readonly id?: number
 	public ean: string
 	public brand: string
 	public name: string
@@ -13,7 +20,8 @@ export class Product extends Entity<ProductDto> {
 
 	private constructor(dto: CreateProductDto) {
 		super()
-		const { ean, brand, name, description, cost, discount, category, fields } = dto
+		const { id, ean, brand, name, description, cost, discount, category, fields } = dto
+		this.id = id
 		this.ean = ean
 		this.brand = brand
 		this.name = name
@@ -49,8 +57,21 @@ export class Product extends Entity<ProductDto> {
 		this.ean = ean
 	}
 
+	updateFields(fields: UpdateProductFieldDto[]) {
+		this.fields = this.fields.map((field) => {
+			fields.map((newField) => {
+				if (field.id == newField.id) {
+					field.name = newField.name || field.name
+					field.value = newField.value || field.value
+					field.description = newField.description || field.description
+				}
+			})
+			return field
+		})
+	}
+
 	public toDto(): ProductDto {
-		const { ean, brand, name, description, cost, category, discount, fields } = this
-		return { ean, brand, name, description, cost, category, discount, fields }
+		const { id, ean, brand, name, description, cost, category, discount, fields } = this
+		return { id, ean, brand, name, description, cost, category, discount, fields }
 	}
 }

@@ -16,6 +16,7 @@ type Product {
 }
 
 type ProductField {
+  id: ID!
   name: String!
   value: String!
   description: String
@@ -68,6 +69,9 @@ enum order {
 
 type Mutation {
   createProduct(productInput: CreateProductInput!): Product!
+  updateProduct(updateProductInput: UpdateProductInput!): Product!
+  deleteProduct(id: Int!): Product!
+  addFieldsToProduct(productId: Int!, fieldsInput: [CreateProductFieldInput!]!): [ProductField!]!
   signUp(signUpInput: SignUpInput!): User!
   signIn(signInInput: SignInInput!): String!
 }
@@ -86,6 +90,25 @@ input CreateProductInput {
 input CreateProductFieldInput {
   name: String!
   value: String!
+  description: String
+}
+
+input UpdateProductInput {
+  id: ID!
+  ean: String
+  brand: String
+  name: String
+  description: String
+  cost: Int
+  discount: Int
+  category: String
+  fields: [UpdateProductFieldInput!]
+}
+
+input UpdateProductFieldInput {
+  id: ID!
+  name: String
+  value: String
   description: String
 }
 

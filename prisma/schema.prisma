@@ -7,7 +7,7 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Category {
+model ProductCategory {
   id      Int       @id @default(autoincrement())
   name    String    @unique
   Product Product[]
@@ -24,14 +24,14 @@ model ProductField {
 }
 
 model Product {
-  id          Int            @id @default(autoincrement())
-  ean         String         @unique
+  id          Int             @id @default(autoincrement())
+  ean         String          @unique
   brand       String
   name        String
   description String?
   cost        Int
-  discount    Int            @default(0)
-  category    Category       @relation(fields: [categoryId], references: [id])
+  discount    Int             @default(0)
+  category    ProductCategory @relation(fields: [categoryId], references: [id])
   categoryId  Int
   fields      ProductField[]
 }

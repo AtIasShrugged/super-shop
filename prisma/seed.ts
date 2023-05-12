@@ -20,7 +20,7 @@ async function main() {
 
 	console.log('Created admin user: ', admin)
 
-	const category = await prisma.category.upsert({
+	const category = await prisma.productCategory.upsert({
 		where: { name: 'Smartphone' },
 		update: {},
 		create: {
