@@ -13,7 +13,6 @@ type Product {
   stockStatus: StockStatus!
   category: ProductCategory!
   fields: [ProductField!]
-  productFields: [ProductField!]!
 }
 
 enum StockStatus {

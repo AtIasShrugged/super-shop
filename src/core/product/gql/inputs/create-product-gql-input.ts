@@ -1,6 +1,5 @@
 import { Field, InputType, Int } from '@nestjs/graphql'
 import { IsEnum, IsNotEmpty, IsOptional, IsPositive, IsString } from 'class-validator'
-import { ProductFieldGQLType } from '../types'
 import { CreateProductFieldInput } from './'
 import { StockStatus } from '../../domain/product-types'
 
@@ -48,5 +47,5 @@ export class CreateProductGQLInput {
 
 	@IsOptional()
 	@Field(() => [CreateProductFieldInput], { nullable: true })
-	fields: ProductFieldGQLType[] | null
+	fields: CreateProductFieldInput[] | null
 }

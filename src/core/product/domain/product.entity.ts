@@ -63,6 +63,7 @@ export class Product extends Entity<ProductDto> {
 	}
 
 	updateFields(fields: UpdateProductFieldDto[]) {
+		if (!fields) return
 		this.fields = this.fields.map((field) => {
 			fields.map((newField) => {
 				if (field.id == newField.id) {

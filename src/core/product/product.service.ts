@@ -36,7 +36,11 @@ export class ProductService {
 		productEntity.update(dto)
 		productEntity.updateFields(dto.fields)
 
-		const updatedProduct = await this.repository.update({ ...productEntity, fields: dto.fields })
+		const updatedProduct = await this.repository.update({
+			...productEntity,
+			fields: productEntity.fields,
+		})
+
 		return updatedProduct
 	}
 

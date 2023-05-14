@@ -38,7 +38,7 @@ export class UpdateProductGQLInput {
 	@IsPositive()
 	@IsOptional()
 	@Field(() => Int, { nullable: true })
-	discount!: number
+	discount!: number | null
 
 	@IsEnum(StockStatus)
 	@IsOptional()
@@ -48,7 +48,7 @@ export class UpdateProductGQLInput {
 	@IsString()
 	@IsOptional()
 	@Field(() => String, { nullable: true })
-	category!: string
+	category!: string | null
 
 	@IsOptional()
 	@Field(() => [UpdateProductFieldInput], { nullable: true })
