@@ -1,5 +1,5 @@
 import { Field, InputType, Int, registerEnumType } from '@nestjs/graphql'
-import { IsNumber, IsOptional } from 'class-validator'
+import { IsEnum, IsNumber, IsOptional } from 'class-validator'
 
 export enum OrderBy {
 	ID = 'id',
@@ -21,16 +21,20 @@ export class SearchOptions {
 	@IsNumber()
 	@IsOptional()
 	@Field(() => Int, { nullable: true })
-	limit!: number | null
+	limit?: number | null
 
 	@IsNumber()
 	@IsOptional()
 	@Field(() => Int, { nullable: true })
-	offset?: number
+	offset?: number | null
 
+	@IsEnum(OrderBy)
+	@IsOptional()
 	@Field(() => OrderBy, { nullable: true })
-	orderBy?: OrderBy
+	orderBy?: OrderBy | null
 
+	@IsEnum(Order)
+	@IsOptional()
 	@Field(() => Order, { nullable: true })
-	order?: Order
+	order?: Order | null
 }

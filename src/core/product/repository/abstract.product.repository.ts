@@ -1,9 +1,32 @@
-import { Product as PrismaProduct, ProductField, ProductCategory } from '@prisma/client'
 import { Product } from '../domain/product.entity'
 import { SearchOptions } from '../gql/inputs'
-import { ProductFieldDto, UpdateProductDto as UpdateProduct } from '../domain/product-types'
+import {
+	ProductFieldDto,
+	StockStatus,
+	UpdateProductDto as UpdateProduct,
+} from '../domain/product-types'
 
-export type ProductModel = PrismaProduct & { fields: ProductField[]; category: ProductCategory }
+export type ProductFieldModel = {
+	id: number
+	name: string
+	value: string
+	description: string | null
+}
+export type ProductModel = {
+	id: number
+	brand: string
+	name: string
+	description: string | null
+	cost: number
+	discount: number
+	ean: string
+	category: {
+		id: number
+		name: string
+	}
+	stockStatus: StockStatus
+	fields: ProductFieldModel[]
+}
 
 export abstract class AbstractProductRepository {
 	create: (product: Product) => Promise<ProductModel>
@@ -11,6 +34,6 @@ export abstract class AbstractProductRepository {
 	find: (options: SearchOptions) => Promise<ProductModel[]>
 	delete: (id: number) => Promise<ProductModel>
 	findById: (id: number) => Promise<ProductModel>
-	getProductFields: (productId: number) => Promise<ProductField[]>
-	addFieldsToProduct: (productId: number, fields: ProductFieldDto[]) => Promise<ProductField[]>
+	getProductFields: (productId: number) => Promise<ProductFieldModel[]>
+	addFieldsToProduct: (productId: number, fields: ProductFieldDto[]) => Promise<ProductFieldModel[]>
 }
