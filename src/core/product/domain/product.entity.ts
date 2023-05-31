@@ -1,6 +1,4 @@
-import { Entity } from '../../../domain/Entity'
 import {
-	ProductDto,
 	CreateProductDto,
 	UpdateProductDto,
 	ProductFieldDto,
@@ -8,7 +6,7 @@ import {
 	StockStatus,
 } from './product-types'
 
-export class Product extends Entity<ProductDto> {
+export class Product {
 	public readonly id?: number
 	public ean: string
 	public brand: string
@@ -21,7 +19,6 @@ export class Product extends Entity<ProductDto> {
 	public fields: ProductFieldDto[]
 
 	private constructor(dto: CreateProductDto) {
-		super()
 		const { id, ean, brand, name, description, cost, discount, stockStatus, category, fields } = dto
 		this.id = id
 		this.ean = ean
@@ -74,11 +71,5 @@ export class Product extends Entity<ProductDto> {
 			})
 			return field
 		})
-	}
-
-	public toDto(): ProductDto {
-		const { id, ean, brand, name, description, cost, discount, stockStatus, category, fields } =
-			this
-		return { id, ean, brand, name, description, cost, discount, stockStatus, category, fields }
 	}
 }

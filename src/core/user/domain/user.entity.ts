@@ -1,10 +1,9 @@
-import { Entity } from '../../../domain/Entity'
 import { UserDto, SignUpDto, Role } from './user-types'
 import * as bcrypt from 'bcrypt'
 
 const PASSWORD_HASH_ROUNDS = Math.max(parseInt(process.env.PASSWORD_HASH_ROUNDS ?? ''), 0) || 10
 
-export class User extends Entity<UserDto> {
+export class User {
 	public email: string
 	public password: string
 	public firstName: string
@@ -14,7 +13,6 @@ export class User extends Entity<UserDto> {
 	public isConfirmed: boolean
 
 	private constructor(dto: UserDto) {
-		super()
 		const {
 			email,
 			firstName,
@@ -52,10 +50,5 @@ export class User extends Entity<UserDto> {
 	public async checkPassword(password: string) {
 		if (!this.password) return false
 		return await bcrypt.compare(password, this.password)
-	}
-
-	public toDto(): UserDto {
-		const { email, firstName, lastName, password, phoneNumber, role, isConfirmed } = this
-		return { email, firstName, lastName, password, phoneNumber, role, isConfirmed }
 	}
 }
